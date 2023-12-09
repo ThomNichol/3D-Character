@@ -1,12 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://f3jgs4o66aki"]
+[gd_scene load_steps=10 format=3 uid="uid://f3jgs4o66aki"]
 
 [ext_resource type="PackedScene" uid="uid://cnv8wlespjhvy" path="res://Player/player.tscn" id="1_drdk6"]
 [ext_resource type="Script" path="res://Player/player.gd" id="2_uio07"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_676b4"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jrty0"]
-size = Vector3(0.8, 0.2, 0.8)
+[ext_resource type="ArrayMesh" uid="uid://bymgthyv60nvu" path="res://Assets/blasterC.obj" id="3_jlx0p"]
 
 [sub_resource type="Environment" id="Environment_16dih"]
 background_mode = 2
@@ -21,24 +17,12 @@ albedo_color = Color(0, 0.403922, 0, 1)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_k1385"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_676b4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jrty0"]
+size = Vector3(0.8, 0.2, 0.8)
+
 [node name="Game" type="Node3D"]
-
-[node name="Player" parent="." instance=ExtResource("1_drdk6")]
-script = ExtResource("2_uio07")
-
-[node name="Body2" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
-shape = SubResource("CapsuleShape3D_676b4")
-
-[node name="Feet2" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-shape = SubResource("BoxShape3D_jrty0")
-
-[node name="Pivot2" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/Pivot2"]
-current = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_16dih")
@@ -54,3 +38,23 @@ surface_material_override/0 = SubResource("StandardMaterial3D_r46m4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("ConcavePolygonShape3D_k1385")
+
+[node name="Player" parent="Ground" instance=ExtResource("1_drdk6")]
+script = ExtResource("2_uio07")
+
+[node name="Body2" type="CollisionShape3D" parent="Ground/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+shape = SubResource("CapsuleShape3D_676b4")
+
+[node name="Feet2" type="CollisionShape3D" parent="Ground/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("BoxShape3D_jrty0")
+
+[node name="Pivot2" type="Node3D" parent="Ground/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Ground/Player/Pivot2"]
+current = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_jlx0p")
